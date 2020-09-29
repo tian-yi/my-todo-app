@@ -1,20 +1,54 @@
+import React, { useState } from "react";
+import ReactDOM from "react-dom";
 
-const TodoItem = ({id, labelName}) => {
-  return  React.createElement(
-    'div', 
-    {className: "todo-item"}, 
-    [
-      React.createElement("input", {type: "checkbox", id: id}),
-      React.createElement("label", {htmlFor: id}, labelName)
-    ]
-  )
-}
+import PropTypes from "prop-types";
+
+const TodoItem = ({ id, labelName }) => {
+  return (
+    <div className="todo-item">
+      <input
+        type="checkbox"
+        id={id}
+        onChange={(e) => {
+          console.log(e.target.checked);
+        }}
+      />
+      <label htmlFor={id}>{labelName}</label>
+    </div>
+  );
+};
+TodoItem.propTypes = {
+  id: PropTypes.string.isRequired,
+  labelName: PropTypes.string.isRequired,
+};
+let todoItems = [
+  { id: "learn-react", labelName: "Learn React" },
+  { id: "create-todo-app", labelName: "Create a todo app" },
+  { id: "profit", labelName: "Profitx" },
+  { id: "have-fun", labelName: "Have fun!" },
+];
+
 const App = () => {
-  return React.createElement('div', {id: "my-todo-app", className: "my-todo-app"}, [
-    React.createElement('h1', {}, "My todo app"),
-    React.createElement(TodoItem, {id:"learn-react", labelName: "Learn React"}),
-    React.createElement(TodoItem, {id:"create-todo-app", labelName: "Create a todo app"}),
-    React.createElement(TodoItem, {id:"profit", labelName: "Profit"}),
-  ])
-}
-ReactDOM.render(React.createElement(App), document.getElementById("root"))
+  const [newTodo, setNewTodo] = useState("");
+  const [todos, setTodos] = useState(todoItems);
+  const createTodo = (e) => {
+    e.preventDefault();
+    setTodos([
+      ...todos,
+      { id: newTodo.toLowerCase().replace(" ", "-"), labelName: newTodo },
+    ]);
+  };
+  return (
+    <div className="my-todo-app">
+      <h1>My todo app</h1>
+      <form onSubmit={createTodo}>
+        <input value={newTodo} onChange={(e) => setNewTodo(e.target.value)} />
+      </form>
+      {todos.map((item) => (
+        <TodoItem key={item.id} id={item.id} labelName={item.labelName} />
+      ))}
+    </div>
+  );
+};
+
+ReactDOM.render(React.createElement(App), document.getElementById("root"));

@@ -1,0 +1,35 @@
+{
+  "name": "my-todo-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "parcel ./src/index.html",
+    "format": "prettier src/**/*.{js,html} --write",
+    "lint": "eslint src/**/*.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tian-yi/my-todo-app.git"
+  },
+  "keywords": [],
+  "author": "Tianyi Wang <dev@tianyi.dev> (https://tianyi.dev)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/tian-yi/my-todo-app/issues"
+  },
+  "homepage": "https://github.com/tian-yi/my-todo-app#readme",
+  "devDependencies": {
+    "eslint": "^7.10.0",
+    "eslint-config-prettier": "^6.12.0",
+    "eslint-plugin-react": "^7.21.2",
+    "parcel-bundler": "^1.12.4",
+    "prettier": "^2.1.2"
+  },
+  "dependencies": {
+    "prop-types": "^15.7.2",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
+  }
+}
