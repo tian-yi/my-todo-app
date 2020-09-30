@@ -1,14 +1,9 @@
+import React from 'react';
+import ReactDOM from 'react-dom';
 
-const TodoItem = ({id, labelName}) => {
-  return  React.createElement(
-    'div', 
-    {className: "todo-item"}, 
-    [
-      React.createElement("input", {type: "checkbox", id: id}),
-      React.createElement("label", {htmlFor: id}, labelName)
-    ]
-  )
-}
+import TodoItem from './TodoItem'
+
+
 const App = () => {
   return React.createElement('div', {id: "my-todo-app", className: "my-todo-app"}, [
     React.createElement('h1', {}, "My todo app"),
@@ -17,4 +12,5 @@ const App = () => {
     React.createElement(TodoItem, {id:"profit", labelName: "Profit"}),
   ])
 }
+
 ReactDOM.render(React.createElement(App), document.getElementById("root"))
