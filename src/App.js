@@ -65,14 +65,16 @@ const App = () => {
   };
   return (
     <div className="todoapp">
-      <h1>My todo app</h1>
-      <form onSubmit={createTodo}>
-        <input
-          value={newTodo}
-          className="new-todo"
-          onChange={(e) => setNewTodo(e.target.value)}
-        />
-      </form>
+      <header>
+        <h1>My todo app</h1>
+        <form onSubmit={createTodo}>
+          <input
+            value={newTodo}
+            className="new-todo"
+            onChange={(e) => setNewTodo(e.target.value)}
+          />
+        </form>
+      </header>
       {todoItems.length > 0 && (
         <section className="main">
           <input
