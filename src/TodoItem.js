@@ -14,6 +14,8 @@ const TodoItem = ({ id, labelName, completed, handleChange }) => {
           onChange={() => handleChange(id)}
         />
         <label htmlFor={id}>{labelName}</label>
+
+        {/* <button className="destroy" onClick={delete} /> */}
       </div>
     </li>
   );
