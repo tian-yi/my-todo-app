@@ -35,6 +35,15 @@ const App = () => {
     localStorage.setItem("todos", JSON.stringify(todos));
   }, [todos]);
 
+  const toggleAll = (e) => {
+    const checked = e.target.checked;
+    const updatedTodos = todos.map((todo) => {
+      return { ...todo, ...{ completed: checked } };
+    });
+
+    setTodos(updatedTodos);
+  };
+
   const updateTodo = (id) => {
     const updatedTodos = todos.map((todo) => {
       if (todo.id === id) {
@@ -61,6 +70,14 @@ const App = () => {
         </form>
       </header>
       <section className="main">
+        <input
+          id="toggle-all"
+          className="toggle-all"
+          type="checkbox"
+          onChange={toggleAll}
+          checked={!todos.some((todo) => !todo.completed)}
+        />
+        <label htmlFor="toggle-all" />
         <ul className="todo-list">
           {todos.map((item) => {
             return (
