@@ -4,14 +4,6 @@ import ReactDOM from "react-dom";
 import "./style.css";
 import TodoItem from "./TodoItem";
 
-// const TodoItemsFromOutSide = [
-//   { id: "learn-react", labelName: "Learn React" },
-//   { id: "create-todo-app", labelName: "Create a todo app" },
-//   { id: "profit", labelName: "Profit" },
-//   { id: "have-fun", labelName: "Have fun!" },
-//   { id: "prettier", labelName: "Prettier is awesome!" },
-// ];
-
 const App = () => {
   const [todos, setTodos] = useState([]);
   const [newTodo, setNewTodo] = useState("");
@@ -54,6 +46,10 @@ const App = () => {
 
     setTodos(updatedTodos);
   };
+  const deleteTodo = (id) => {
+    const updatedTodos = todos.filter((todo) => todo.id !== id);
+    setTodos(updatedTodos);
+  };
   return (
     <div className="todoapp">
       <header className="header">
@@ -83,6 +79,7 @@ const App = () => {
             return (
               <TodoItem
                 handleChange={updateTodo}
+                handleDelete={deleteTodo}
                 key={item.id}
                 id={item.id}
                 labelName={item.labelName}
