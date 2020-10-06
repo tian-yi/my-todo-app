@@ -6,7 +6,9 @@ import TodoItem from "./TodoItem";
 
 const App = () => {
   const [todos, setTodos] = useState([]);
+  const [nowShowingTodos, setNowShowingTodos] = useState([]);
   const [newTodo, setNewTodo] = useState("");
+  const [todoFilter, setTodoFilter] = useState("all");
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -50,6 +52,19 @@ const App = () => {
     const updatedTodos = todos.filter((todo) => todo.id !== id);
     setTodos(updatedTodos);
   };
+
+  useEffect(() => {
+    let newShowingTodos = [];
+    if (todoFilter === "active") {
+      newShowingTodos = todos.filter((todo) => todo.completed === false);
+    } else if (todoFilter === "completed") {
+      newShowingTodos = todos.filter((todo) => todo.completed === true);
+    } else {
+      newShowingTodos = todos;
+    }
+    setNowShowingTodos(newShowingTodos);
+  }, [todoFilter, todos]);
+
   return (
     <div className="todoapp">
       <header className="header">
@@ -75,7 +90,7 @@ const App = () => {
         />
         <label htmlFor="toggle-all" />
         <ul className="todo-list">
-          {todos.map((item) => {
+          {nowShowingTodos.map((item) => {
             return (
               <TodoItem
                 handleChange={updateTodo}
@@ -89,6 +104,56 @@ const App = () => {
           })}
         </ul>
       </section>
+      <footer className="footer">
+        <span className="todo-count">
+          <strong>
+            {todos.filter((todo) => todo.completed !== true).length}
+          </strong>{" "}
+          {`item${
+            todos.filter((todo) => todo.completed !== true).length > 1
+              ? "s"
+              : ""
+          }`}{" "}
+          left
+        </span>
+        <ul className="filters">
+          <li>
+            <a
+              href="#/"
+              className={todoFilter === "all" ? "selected" : ""}
+              onClick={() => setTodoFilter("all")}
+            >
+              All
+            </a>
+          </li>
+          <li>
+            <a
+              href="#/active"
+              className={todoFilter === "active" ? "selected" : ""}
+              onClick={() => setTodoFilter("active")}
+            >
+              Active
+            </a>
+          </li>
+          <li>
+            <a
+              href="#/completed"
+              className={todoFilter === "completed" ? "selected" : ""}
+              onClick={() => setTodoFilter("completed")}
+            >
+              Completed
+            </a>
+          </li>
+        </ul>
+        <button
+          className="clear-completed"
+          onClick={() =>
+            setTodos(todos.filter((todo) => todo.completed !== true))
+          }
+        >
+          Clear completed
+        </button>
+      </footer>
     </div>
   );
 };
