@@ -6,7 +6,7 @@ const Header = ({ handleSubmit, newTodo, handleChange }) => {
   return (
     <header className="header">
       <h1>Todos</h1>
-      <form onSubmit={(e) => handleSubmit(e)}>
+      <form onSubmit={handleSubmit}>
         <input
           className="new-todo"
           placeholder="What needs to be done?"

@@ -2,7 +2,7 @@ import React from "react";
 
 import PropTypes from "prop-types";
 
-import { ALL, ACTIVE, COMPLETED } from "./App";
+import { ALL, ACTIVE, COMPLETED } from "./AppClassComponent";
 
 const Footer = ({ todos, activeFilter, handleClick, handleClear }) => {
   return (
