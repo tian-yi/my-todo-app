@@ -55,6 +55,13 @@ const App = () => {
     setTodos(newTodos);
   };
 
+  const toggleAll = (checked) => {
+    const newTodos = todos.map((todo) => {
+      return { ...todo, completed: checked };
+    });
+
+    setTodos(newTodos);
+  };
   return (
     <div className="todoapp">
       <header className="header">
@@ -71,6 +78,16 @@ const App = () => {
         </form>
       </header>
       <section className="main">
+        <input
+          id="toggle-all"
+          className="toggle-all"
+          type="checkbox"
+          onChange={(e) => {
+            toggleAll(e.target.checked);
+          }}
+          checked={!todos.some((todo) => !todo.completed)}
+        />
+        <label htmlFor="toggle-all" />
         <ul className="todo-list">
           {todos.map((item) => {
             return (
