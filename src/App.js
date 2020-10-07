@@ -2,11 +2,15 @@ import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 
 import "./style.css";
-import TodoItem from "./TodoItem";
 
-const ALL = "all";
-const ACTIVE = "active";
-const COMPLETED = "completed";
+import Header from "./Header";
+import ToggleAll from "./ToggleAll";
+import TodoList from "./TodoList";
+import Footer from "./Footer";
+
+export const ALL = "all";
+export const ACTIVE = "active";
+export const COMPLETED = "completed";
 
 const App = () => {
   const [todos, setTodos] = useState([]);
@@ -79,89 +83,30 @@ const App = () => {
 
     setTodos(newTodos);
   };
+  const clearCompleted = () => {
+    setTodos(todos.filter((todo) => todo.completed !== true));
+  };
   return (
     <div className="todoapp">
-      <header className="header">
-        <h1>Todos</h1>
-        <form onSubmit={(e) => handleSubmit(e)}>
-          <input
-            className="new-todo"
-            placeholder="What needs to be done?"
-            value={newTodo}
-            onChange={(e) => {
-              setNewTodo(e.target.value);
-            }}
-          />
-        </form>
-      </header>
+      <Header
+        handleSubmit={handleSubmit}
+        newTodo={newTodo}
+        handleChange={setNewTodo}
+      />
       <section className="main">
-        <input
-          id="toggle-all"
-          className="toggle-all"
-          type="checkbox"
-          onChange={(e) => {
-            toggleAll(e.target.checked);
-          }}
-          checked={!todos.some((todo) => !todo.completed)}
+        <ToggleAll handleChange={toggleAll} todos={todos} />
+        <TodoList
+          todos={nowShowingTodos}
+          handleChange={updateTodo}
+          handleDelete={deleteTodo}
         />
-        <label htmlFor="toggle-all" />
-        <ul className="todo-list">
-          {nowShowingTodos.map((item) => {
-            return (
-              <TodoItem
-                key={item.id}
-                id={item.id}
-                labelName={item.labelName}
-                completed={item.completed}
-                handleChange={updateTodo}
-                handleDelete={deleteTodo}
-              />
-            );
-          })}
-        </ul>
       </section>
-      <footer className="footer">
-        <span className="todo-count">
-          <strong>
-            {todos.filter((todo) => todo.completed !== true).length}
-          </strong>{" "}
-          {`item${
-            todos.filter((todo) => todo.completed !== true).length > 1
-              ? "s"
-              : ""
-          }`}{" "}
-          left
-        </span>
-        <ul className="filters">
-          <li>
-            <a
-              href="#/"
-              className={todoFilter === ALL ? "selected" : ""}
-              onClick={() => setTodoFilter(ALL)}
-            >
-              All
-            </a>
-          </li>
-          <li>
-            <a
-              href="#/active"
-              className={todoFilter === ACTIVE ? "selected" : ""}
-              onClick={() => setTodoFilter(ACTIVE)}
-            >
-              Active
-            </a>
-          </li>
-          <li>
-            <a
-              href="#/completed"
-              className={todoFilter === COMPLETED ? "selected" : ""}
-              onClick={() => setTodoFilter(COMPLETED)}
-            >
-              Completed
-            </a>
-          </li>
-        </ul>
-      </footer>
+      <Footer
+        todos={todos}
+        activeFilter={todoFilter}
+        handleClick={setTodoFilter}
+        handleClear={clearCompleted}
+      />
     </div>
   );
 };
