@@ -11,9 +11,14 @@ const App = () => {
   useEffect(() => {
     const newTodos = JSON.parse(localStorage.getItem("todos") || "[]");
     setTodos(newTodos);
-    const newTodoFromStorage = JSON.parse(
-      localStorage.getItem("new-todo") || ""
-    );
+
+    let newTodoFromStorage = localStorage.getItem("new-todo");
+    if (newTodoFromStorage) {
+      newTodoFromStorage = JSON.parse(newTodoFromStorage);
+    } else {
+      newTodoFromStorage = "";
+    }
+
     setNewTodo(newTodoFromStorage);
   }, []);
 
