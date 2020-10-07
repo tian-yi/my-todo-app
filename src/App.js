@@ -4,14 +4,19 @@ import ReactDOM from "react-dom";
 import "./style.css";
 import TodoItem from "./TodoItem";
 
+const ALL = "all";
+const ACTIVE = "active";
+const COMPLETED = "completed";
+
 const App = () => {
   const [todos, setTodos] = useState([]);
   const [newTodo, setNewTodo] = useState("");
+  const [nowShowingTodos, setNowShowingTodos] = useState([]);
+  const [todoFilter, setTodoFilter] = useState(ALL);
 
   useEffect(() => {
     const newTodos = JSON.parse(localStorage.getItem("todos") || "[]");
     setTodos(newTodos);
-
     let newTodoFromStorage = localStorage.getItem("new-todo");
     if (newTodoFromStorage) {
       newTodoFromStorage = JSON.parse(newTodoFromStorage);
@@ -23,8 +28,15 @@ const App = () => {
   }, []);
 
   useEffect(() => {
+    if (todoFilter === ALL) {
+      setNowShowingTodos(todos);
+    } else if (todoFilter === ACTIVE) {
+      // keep only unchecked items
+    } else if (todoFilter === COMPLETED) {
+      // keep only completed items
+    }
     localStorage.setItem("todos", JSON.stringify(todos));
-  }, [todos]);
+  }, [todos, todoFilter]);
 
   useEffect(() => {
     localStorage.setItem("new-todo", JSON.stringify(newTodo));
@@ -89,7 +101,7 @@ const App = () => {
         />
         <label htmlFor="toggle-all" />
         <ul className="todo-list">
-          {todos.map((item) => {
+          {nowShowingTodos.map((item) => {
             return (
               <TodoItem
                 key={item.id}
@@ -103,6 +115,22 @@ const App = () => {
           })}
         </ul>
       </section>
+      <footer className="footer">
+        <span className="todo-count">
+          <strong>2</strong> items left
+        </span>
+        <ul className="filter">
+          <li>
+            <a href="#/">All</a>
+          </li>
+          <li>
+            <a href="#/active">Active</a>
+          </li>
+          <li>
+            <a href="#/completed">Completed</a>
+          </li>
+        </ul>
+      </footer>
     </div>
   );
 };
