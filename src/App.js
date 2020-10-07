@@ -4,7 +4,7 @@ import ReactDOM from "react-dom";
 import "./style.css";
 import TodoItem from "./TodoItem";
 
-const myTodos = localStorage.getItem("todos") || [];
+const myTodos = localStorage.getItem("todos") || "[]";
 const App = () => {
   const [todos, setTodos] = useState(JSON.parse(myTodos));
   const [newTodo, setNewTodo] = useState("");
