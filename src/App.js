@@ -28,15 +28,22 @@ const App = () => {
   }, []);
 
   useEffect(() => {
-    if (todoFilter === ALL) {
-      setNowShowingTodos(todos);
-    } else if (todoFilter === ACTIVE) {
-      // keep only unchecked items
+    let newNowShowingTodos;
+
+    if (todoFilter === ACTIVE) {
+      newNowShowingTodos = todos.filter((todo) => !todo.completed);
     } else if (todoFilter === COMPLETED) {
-      // keep only completed items
+      newNowShowingTodos = todos.filter((todo) => todo.completed);
+    } else {
+      newNowShowingTodos = todos;
     }
-    localStorage.setItem("todos", JSON.stringify(todos));
+
+    setNowShowingTodos(newNowShowingTodos);
   }, [todos, todoFilter]);
+
+  useEffect(() => {
+    localStorage.setItem("todos", JSON.stringify(todos));
+  }, [todos]);
 
   useEffect(() => {
     localStorage.setItem("new-todo", JSON.stringify(newTodo));
@@ -117,17 +124,45 @@ const App = () => {
       </section>
       <footer className="footer">
         <span className="todo-count">
-          <strong>2</strong> items left
+          <strong>{todos.filter((todo) => !todo.completed).length}</strong>
+          {todos.filter((todo) => !todo.completed).length > 1
+            ? " items "
+            : " item "}
+          left
         </span>
-        <ul className="filter">
+        <ul className="filters">
           <li>
-            <a href="#/">All</a>
+            <a
+              className={todoFilter === ALL ? "selected" : ""}
+              onClick={() => {
+                setTodoFilter(ALL);
+              }}
+              href="#/"
+            >
+              All
+            </a>
           </li>
           <li>
-            <a href="#/active">Active</a>
+            <a
+              className={todoFilter === ACTIVE ? "selected" : ""}
+              onClick={() => {
+                setTodoFilter(ACTIVE);
+              }}
+              href="#/active"
+            >
+              Active
+            </a>
           </li>
           <li>
-            <a href="#/completed">Completed</a>
+            <a
+              className={todoFilter === COMPLETED ? "selected" : ""}
+              onClick={() => {
+                setTodoFilter(COMPLETED);
+              }}
+              href="#/completed"
+            >
+              Completed
+            </a>
           </li>
         </ul>
       </footer>
