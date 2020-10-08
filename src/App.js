@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 
 import "./style.css";
 import TodoItem from "./TodoItem";
+import Header from "./Header";
 
 const ALL = "all";
 const ACTIVE = "active";
@@ -83,19 +84,11 @@ const App = () => {
   };
   return (
     <div className="todoapp">
-      <header className="header">
-        <h1>Todos</h1>
-        <form onSubmit={(e) => handleSubmit(e)}>
-          <input
-            className="new-todo"
-            placeholder="What needs to be done?"
-            value={newTodo}
-            onChange={(e) => {
-              setNewTodo(e.target.value);
-            }}
-          />
-        </form>
-      </header>
+      <Header
+        handleSubmit={handleSubmit}
+        newTodo={newTodo}
+        handleChange={setNewTodo}
+      />
       <section className="main">
         <input
           id="toggle-all"
