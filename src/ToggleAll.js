@@ -29,4 +29,5 @@ ToggleAll.propTypes = {
     })
   ),
 };
+
 export default ToggleAll;

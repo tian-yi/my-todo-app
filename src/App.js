@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 
 import "./style.css";
-import TodoItem from "./TodoItem";
 import Header from "./Header";
 import ToggleAll from "./ToggleAll";
+import TodoList from "./TodoList";
 
 const ALL = "all";
 const ACTIVE = "active";
@@ -92,20 +92,11 @@ const App = () => {
       />
       <section className="main">
         <ToggleAll toggleAll={toggleAll} todos={todos} />
-        <ul className="todo-list">
-          {nowShowingTodos.map((item) => {
-            return (
-              <TodoItem
-                key={item.id}
-                id={item.id}
-                labelName={item.labelName}
-                completed={item.completed}
-                handleChange={updateTodo}
-                handleDelete={deleteTodo}
-              />
-            );
-          })}
-        </ul>
+        <TodoList
+          todos={nowShowingTodos}
+          handleChange={updateTodo}
+          handleDelete={deleteTodo}
+        />
       </section>
       <footer className="footer">
         <span className="todo-count">
